@@ -1,0 +1,1 @@
+export const appTitle = "Franderney's Unit Converter"
