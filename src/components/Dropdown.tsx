@@ -5,7 +5,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 interface Props {
   items?: any
   placeHolder?: string
-  value?: string
+  value?: string,
+  onSelectChange: (dta:any) => void
 }
 
 const Dropdown = (props: Props) => {
@@ -13,12 +14,11 @@ const Dropdown = (props: Props) => {
     <DropDownPicker
       items={props.items}
       placeholder="asdfsadf sadfsadf"
-      // defaultIndex={0}
       labelStyle={{ color: '#000' }}
       containerStyle={{ height: 60 }}
       itemStyle={{ justifyContent: 'flex-start' }}
       defaultValue={props.value}
-      onChangeItem={item => console.log(item.label, item.value)}
+      onChangeItem={item => props.onSelectChange(item)}
       style={styles.dropdown}
     />
   )

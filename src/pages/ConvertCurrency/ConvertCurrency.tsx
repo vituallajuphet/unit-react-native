@@ -8,6 +8,8 @@ import {
     Text,
     Button,
     StatusBar,
+    TextInput,
+    Alert,
 } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler'
@@ -17,25 +19,49 @@ import { connect } from 'react-redux'
 
 import { appTitle } from '../../lib/utils'
 import Dropdown from '../../components/Dropdown'
+
 interface Props {
     is_started?: boolean
     navigation?: any
 }
 
+interface Obj{
+    label: string
+    value: string
+    curToPeso: number
+}
+
 const ConvertCurrency = (props: Props) => {
 
-    const [dactive, setActive] = useState('software_enadmingineer')
+    const [val1, setVal1] = useState( { label: '', value: '', curToPeso: 0 })
+    const [val2, setVal2] = useState({ label: '', value: '', curToPeso: 0 })
 
     const roleitems = [
-        { label: 'USD', value: 'usd', cur: 48.07 },
-        { label: 'EUR', value: 'eud', cur: 58.22 },
-        { label: 'GBP', value: 'gbp', cur: 65.93 },
-        { label: 'JPY', value: 'jyp', cur: 0.46 },
-        { label: 'NZD', value: 'nzd', cur: 34.49 },
-        { label: 'PHP', value: 'php', cur: 1 },
-        { label: 'KRW', value: 'krw', cur: 0.043 }
+        { label: 'USD', value: 'usd', curToPeso: 48.07 },
+        { label: 'EUR', value: 'eud', curToPeso: 58.22 },
+        { label: 'GBP', value: 'gbp', curToPeso: 65.93 },
+        { label: 'JPY', value: 'jyp', curToPeso: 0.46 },
+        { label: 'NZD', value: 'nzd', curToPeso: 34.49 },
+        { label: 'PHP', value: 'php', curToPeso: 1 },
+        { label: 'KRW', value: 'krw', curToPeso: 0.043 }
     ]
 
+    const getData1 = (dta:Obj) =>{
+        setVal1(dta)
+    }
+
+    const getData2 = (dta:Obj) =>{
+        setVal2(dta)
+    }
+
+    const convert_currency = () => {
+        const result = val1.curToPeso * val1.curToPeso
+        Alert.alert("Result: " + result.toString())
+    }
+
+    const textField1Handler = (e:any) => {
+        console.log(e)
+    }
 
     return (
         <View>
@@ -47,18 +73,23 @@ const ConvertCurrency = (props: Props) => {
                     placeHolder='Role*'
                     items={roleitems}
                     value='usd'
+                    onSelectChange = { getData1 }
                 />
+                
             </View>
 
-            <View style={{ padding: 15, paddingTop: 30 }}>
+            <View style={{ padding: 15, paddingTop: 10 }}>
                 <Text>To</Text>
                 <Dropdown
                     placeHolder='Role*'
                     items={roleitems}
                     value='usd'
+                    onSelectChange = { getData2 }
                 />
-                <View style={{ marginTop: 20 }}>
-                    <Button color="blue" onPress={() => { }} title="Convert" />
+                <TextInput onChangeText= {(e:any) => console.log(e)} style={styles.textField} placeholder="Enter first value" />
+                <TextInput style={styles.textField} placeholder="Enter second value" />
+                <View style={{ marginTop: 50 }}>
+                    <Button color="black" onPress={() => convert_currency()} title="Convert" />
                 </View>
             </View>
         </View>
@@ -78,7 +109,13 @@ const styles = StyleSheet.create({
     },
     btn: {
 
+    },
+    textField:{
+        borderBottomColor:'#666',
+        borderBottomWidth:1,
+        marginTop:20
     }
+    
 
 });
 
