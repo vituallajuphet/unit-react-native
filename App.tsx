@@ -1,4 +1,6 @@
 import React from 'react';
+import { Provider } from 'react-redux'
+import store from './src/redux/store'
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,14 +9,16 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import { SplashScreen, Home } from './src/pages'
+import Routes from './src/Routes'
 
 
 
 const App = () => {
   return (
     <>
-      <Home />
+      <Provider store={store}>
+        <Routes />
+      </Provider>
     </>
   );
 };
